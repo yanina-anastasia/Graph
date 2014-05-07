@@ -7,7 +7,7 @@
 #include <map>
 #include <vector>
 
-/*элемент списка смежности в формате: (<конечная вершина ребра>,<значение на ребре>)*/
+/*element of adjacency list in format: (<vertex>,<value>)*/
 template <class T>
 class AdjListElement {
 private:
@@ -47,11 +47,11 @@ public:
 template <class T>
 class Graph {
 private:
-	std::map<int, std::vector<AdjListElement<T>>> adjacencyList;  //список смежности
-	int size;  //размер графа
-	std::ostream & out;   //поток вывода(можно выводить в консоль или записывать в файл)
+	std::map<int, std::vector<AdjListElement<T>>> adjacencyList;
+	int size; 
+	std::ostream & out; 
 
-	/*структура для работы алгоритмов поиска оптимального пути в графе*/
+	/*struct for find algorithms work*/
 	struct valueContainer { 
 		T value;
 		bool isInfinity;
@@ -98,7 +98,7 @@ private:
 
 	};
 	
-	/*построение ребер с нулевыми весами от новой стартовой вершины до всех вершин, из которых нужно производить поиск*/
+	/*adding edges with zero value from the start vertex to the finish group of vertex*/
 	struct edgeAdjunct {  
 		const std::vector<int> & edges;
 		Graph<T> & graph;
@@ -125,7 +125,7 @@ private:
 public:
 	Graph() :
 		size(0) {
-		std::locale cp_1251("Russian_Russia.1251");  //поддержка русского языка
+		std::locale cp_1251("Russian_Russia.1251");  //Russian language support
 		std::locale::global(cp_1251);
 		std::cout.imbue(cp_1251);
 		std::ios::sync_with_stdio(false);
@@ -135,25 +135,23 @@ public:
 	Graph (int _size, std::ostream & _out) :
 		size(_size),
 		out(_out) {
-		std::locale cp_1251("Russian_Russia.1251");  //поддержка русского языка
+		std::locale cp_1251("Russian_Russia.1251");  //Russian language support
 		std::locale::global(cp_1251);
 		out.imbue(cp_1251);
 		std::ios::sync_with_stdio(false);
 	}
 
-	/*проверяет допустимость параметров ф-й, выбрасывает исключение в случае некорректных данных*/
+	/*checking the validity of input parametres*/
 	void checkValidity(int firstNode, int lastNode);
 
-	/*добавить ребро*/
 	void addEdge(int firstNode, int lastNode, const T & _value);
 
-	/*изменить значение на ребре*/
+	/*changing the value on the edge*/
 	void editEdge(int firstNode, int lastNode, const T & _value);  
 
-	/*удалить ребро*/
 	void deleteEdge (int firstNode, int lastNode);  
 
-	/*возвращает перечень всех вершин, содержащихся в графе*/
+	/*returns vector of all the vertex in the graph*/
 	std::vector<int> showVertex() { 
 		std::vector<int> result;
 		for (auto & adjList: adjacencyList) {
@@ -162,7 +160,7 @@ public:
 		return result;
 	}
 
-	/*возвращает список смежности для конкретной вершины*/
+	/*returns the adjacency list for the vertex*/
 	std::vector<AdjListElement<T>> showAdjList(int vertex) {
 		std::vector<AdjListElement<T>> result;
 		if (adjacencyList.count(vertex) > 0) {
@@ -171,12 +169,12 @@ public:
 		return result;
 	}
 	
-	/*возвращает размер графа*/
+	/*returns size of the graph*/
 	int showSize() const {
 		return size;
 	}
 
-	/*позволяет изменить размер графа*/
+	/*changes graph size*/
 	void changeSize(int _size) {
 		for (auto & adjList: adjacencyList) {
 			if (adjList.first > _size) {
@@ -186,13 +184,13 @@ public:
 		size = _size;
 	}
 
-	/*печатает граф в формате <вершина>: <ее список смежности>*/
+	/*printing results*/
 	void print() const;
 
-	/*проверяет корректность входных данных для алгоритмов поиска оптимального пути в графе*/
+	/*checking the validity of input for find path algorithms*/
 	void checkFindSetValidity (const std::vector<int> & findSet);
 
-	/*поиск оптимального пути в графе*/
+	/*searching for the optimal path*/
 	bool findPath (const std::vector<int> & from, const std::vector<int> & to); 
 
 	bool Dijkstra(const std::vector<int> & from, const std::vector<int> & to, std::vector<int> & path, T & pathLength);

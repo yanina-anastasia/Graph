@@ -1,7 +1,7 @@
 #pragma once
 #include "Graph.h"
 
-/*частичная спецификация шаблона функции*/
+/*partial specification of a function template*/
 template<>
 struct std::numeric_limits<ComplexNumber> {
 	static ComplexNumber min() {
@@ -16,7 +16,7 @@ struct std::numeric_limits<std::string> {
 	}
 };
 
-/*проверка корректности входных данных*/
+/*checking the validity of input*/
 template<class T>
 void Graph<T>::checkValidity(int firstNode, int lastNode) {
 	bool edgeNotFound = adjacencyList.count(firstNode) <= 0 || adjacencyList.count(lastNode) <= 0;
@@ -27,14 +27,13 @@ void Graph<T>::checkValidity(int firstNode, int lastNode) {
 	}	
 }
 
-/*добавить ребро в граф*/
+/*adds the edge to the graph*/
 template <class T>
 void Graph<T>::addEdge(int firstNode, int lastNode, const T & _value) {
 	if ((firstNode < 0) || (lastNode < 0)) {
 		throw std::invalid_argument("Invalid argument(s)/Недопустимый(е) параметр(ы)");
 	}
 
-	//если добавляемое ребро больше текущего максимального размера графа - увеличить размер графа
 	if (firstNode >= size) {
 		size = firstNode + 1;
 	}
@@ -48,15 +47,15 @@ void Graph<T>::addEdge(int firstNode, int lastNode, const T & _value) {
 	auto & lastAdjListFound = adjacencyList.find(lastNode);
 
 	if (firstAdjListFound != adjacencyList.end()) {
-		firstAdjListFound->second.push_back(edge);  //если список смежности вершины уже есть в графе - изменить его
+		firstAdjListFound->second.push_back(edge);  //if adjacency list is already in the graph - change it
 	} else {
 		std::vector<AdjListElement<T>> newAdjList; 
 		newAdjList.push_back(edge);
-		adjacencyList.emplace(std::make_pair(firstNode, newAdjList)); //если его нет - добавить
+		adjacencyList.emplace(std::make_pair(firstNode, newAdjList)); //else - add it
 	}
 
-	/*добавление обратного ребра (граф неориентирован)*/
-	if (firstNode != lastNode) {  //проверка, не является ли добавляемое ребро петлей
+	/*adding if the reversed edge(graph is undirected)*/
+	if (firstNode != lastNode) {  //check whether the edge is a loop
 		AdjListElement<T> reversedEdge (firstNode, _value);
 		if (lastAdjListFound != adjacencyList.end()) {
 			lastAdjListFound->second.push_back(reversedEdge);
@@ -68,7 +67,7 @@ void Graph<T>::addEdge(int firstNode, int lastNode, const T & _value) {
 	}
 }
 
-/*изменить текущее значение на ребре*/
+/*changes current value on the edge*/
 template <class T>
 void Graph<T>::editEdge(int firstNode, int lastNode, const T & _value) {
 
@@ -78,7 +77,7 @@ void Graph<T>::editEdge(int firstNode, int lastNode, const T & _value) {
 
 	auto & adjList = adjacencyList.find(firstNode)->second;
 	for(auto & edge: adjList) {
-		/*если ребро найдено - изменить значение на нем на требуемое*/
+		/*if the edge is found - change the value on the required*/
 		if (edge.getVertex() == lastNode) {
 			edge.setValue(_value);
 			edgeExistance = true;
@@ -89,7 +88,7 @@ void Graph<T>::editEdge(int firstNode, int lastNode, const T & _value) {
 	if (firstNode != lastNode) {
 		auto & reversedAdjList = adjacencyList.find(lastNode)->second;
 		for(auto & edge: reversedAdjList) {
-			/*если обратное ребро найдено - изменить значение на нем на требуемое*/
+			/*if the reversed edge is found - change the value on the required*/
 			if (edge.getVertex() == firstNode) {
 				edge.setValue(_value);
 				edgeExistance = true;
@@ -98,14 +97,14 @@ void Graph<T>::editEdge(int firstNode, int lastNode, const T & _value) {
 		}
 	}
 
-	/*если ребро так и не было найдено - выбросить исключение*/
+	/*if the edge was not found - throw the exception*/
 	if (!edgeExistance) {
 		std::cout<< "This edge was not found" << std::endl;
 		throw std::invalid_argument("The edge was not found/Ребро не найдено");
 	}
 }
 
-/*удалить ребро из графа*/
+/*deletes edge from the graph*/
 template <class T>
 void Graph<T>::deleteEdge (int firstNode, int lastNode) {
 	
@@ -120,15 +119,15 @@ void Graph<T>::deleteEdge (int firstNode, int lastNode) {
 
 	for (size_t i = 0; i < toDelete.size(); ++i) {
 		if (toDelete[i].getVertex() == lastNode) {
-			eraser = i;  //позиция ребра, которое нужно удалить, в списке смежности
+			eraser = i;  //edge position that you want to delete in the adjacency list
 			break;
 		}
 	}
 
-	auto & firstAdjListFound = adjacencyList.find(firstNode)->second;  //список смежности начальной вершины
-	auto & lastAdjListFound = adjacencyList.find(lastNode)->second;  //список смежности конечной вершины
+	auto & firstAdjListFound = adjacencyList.find(firstNode)->second; 
+	auto & lastAdjListFound = adjacencyList.find(lastNode)->second;  
 
-	firstAdjListFound.erase(firstAdjListFound.begin() + eraser);  //удаление ребра
+	firstAdjListFound.erase(firstAdjListFound.begin() + eraser);  //deleting edge
 	toDelete = lastAdjListFound;
 	eraser = 0;
 
@@ -139,11 +138,11 @@ void Graph<T>::deleteEdge (int firstNode, int lastNode) {
 		}
 	}
 
-	if (lastNode != firstNode) {  //если это не петля
-		lastAdjListFound.erase(lastAdjListFound.begin() + eraser);  //удаление обратного ребра
+	if (lastNode != firstNode) {  //if it is not a loop
+		lastAdjListFound.erase(lastAdjListFound.begin() + eraser);  //deleting reversed edge
 	}
 
-	/*если список смежности вершины оказался пустым, удалить его из adjacencyList*/
+	/*if adjacency list of the vertex is empty - delete it from the adjacencyList*/
 	if (adjacencyList[firstNode].empty()) {
 		adjacencyList.erase(firstNode);
 	}
@@ -152,7 +151,7 @@ void Graph<T>::deleteEdge (int firstNode, int lastNode) {
 	}
 }
 
-/*вывод структуры графа на печать*/
+/*printing the graph structure*/
 template <class T>
 void Graph<T>::print() const {
 	for (auto & mapIter: adjacencyList) {
@@ -164,7 +163,7 @@ void Graph<T>::print() const {
 	}
 }
 
-/*проверка корректности входных данных для алгоритмов поиска оптимального пути*/
+/*cheking validity of the input*/
 template<class T> 
 void Graph<T>::checkFindSetValidity (const std::vector<int> & findSet) {
 	for (size_t i = 0; i < findSet.size(); ++i) {
@@ -175,15 +174,15 @@ void Graph<T>::checkFindSetValidity (const std::vector<int> & findSet) {
 	}
 }
 
-/*поиск оптимального пути от одной группы вершин до другой*/
+/*searching for the optimal path from one group of vertex to another*/
 template <class T>
 bool Graph<T>::findPath (const std::vector<int> &from, const std::vector<int> &to) {
 
-	/*проверка корректности входных данных*/
+	/*cheking validity of the input*/
 	checkFindSetValidity(from);
 	checkFindSetValidity(to);
 
-	/*проверка наличия в графе циклов с отрицательным весом*/
+	/*checking for negative cycles*/
 	bool hasNegativeEdges = false;
 	for (auto & mapIter: adjacencyList) {
 		for (auto & edge: mapIter.second) {
@@ -199,12 +198,12 @@ bool Graph<T>::findPath (const std::vector<int> &from, const std::vector<int> &t
 	std::vector<int> path;
 
 	if (!hasNegativeEdges) {
-		hasPath = Dijkstra(from, to, path, minLength);	//алгоритм Дейкстры
+		hasPath = Dijkstra(from, to, path, minLength);	//Dijkstra algorithm
 	} else {
-		hasPath = FordBellman(from, to, path, minLength); //алгоритм Форда-Беллмана	
+		hasPath = FordBellman(from, to, path, minLength); //Ford-Bellman algorithm
 	}
 
-	/*вывод результатов поиска оптимального пути в графе на печать*/
+	/*printing results*/
 	if (hasPath) {
 		out << "Length of the best route/Длина наикратчайшего пути: " << minLength << std::endl;
 		out << "Route/Маршрут: ";
@@ -222,21 +221,23 @@ bool Graph<T>::findPath (const std::vector<int> &from, const std::vector<int> &t
 template <class T>
 bool Graph<T>::Dijkstra(const std::vector<int> & from, const std::vector<int> & to, std::vector<int> & path, T & pathLength) {
 
-	/*проверка корректности входных данных*/
+	/*checking the validity of input*/
 	checkFindSetValidity(from);
 	checkFindSetValidity(to);
 
 	int start = size;
-	edgeAdjunct edgeProc(from, *this); //дополняет граф ребрами с нулевыми значениями до новой стартовой вершины
 
-	std::vector<valueContainer> distances;  //вектор расстояний от старта до каждой вершины в графе
+	/*adjuncts graph with zero edges from new start vertex to the group of start vertex*/
+	edgeAdjunct edgeProc(from, *this);
+
+	std::vector<valueContainer> distances; 
 	distances.resize(size);
 	std::vector<int> parents; 
 	parents.resize(size);
 	distances[start] = T();
 	std::vector<char> used(size);
 
-	/*реализация алгоритма Дейкстры*/
+	/*realisation of Dijkstra algorithm*/
 	for (int index = 0; index < size; ++index) {
 		int vertex = -1;
 		for (int j = 0; j < size; ++j) 
@@ -269,7 +270,7 @@ bool Graph<T>::Dijkstra(const std::vector<int> & from, const std::vector<int> & 
 		}
 	}
 
-	/*поиск минимального пути из множества путей до конечной группы вершин*/
+	/*searching for the least path among pathes to the finish group of vertex*/
 	valueContainer minLength;
 	int minPath = 0;
 	for (size_t index = 0; index < to.size(); ++index) {
@@ -283,7 +284,7 @@ bool Graph<T>::Dijkstra(const std::vector<int> & from, const std::vector<int> & 
 		return false;
 	}
 	
-	/*построение пути*/
+	/*building the path*/
 	for (int vertex = minPath; vertex != start; vertex = parents[vertex]) {
 		path.push_back (vertex);
 	}
@@ -297,16 +298,16 @@ bool Graph<T>::Dijkstra(const std::vector<int> & from, const std::vector<int> & 
 template <class T>
 bool Graph<T>::FordBellman(const std::vector<int> & from, const std::vector<int> & to, std::vector<int> & path, T & pathLength) {
 	
-	/*проверка корректности входных данных*/
+	/*checking the validity of input*/
 	checkFindSetValidity(from);
 	checkFindSetValidity(to);
 	
 	int start = size;
 
-	/*дополняет граф ребрами с нулевыми значениями до новой стартовой вершины*/
+	/*adjuncts graph with zero edges from new start vertex to the group of start vertex*/
 	edgeAdjunct edgeProc(from, *this);
 
-	/*реализация алгоритма Форда-Беллмана(с обработкой циклов с отрицательным весом)*/
+	/*realisation of Ford-Bellman's algorithm (with processing negative cycles)*/
 	std::vector<valueContainer> distance;
 	distance.resize(size);
 	std::vector<int> parents;
@@ -334,7 +335,7 @@ bool Graph<T>::FordBellman(const std::vector<int> & from, const std::vector<int>
 		}
 	}
 
-	/*поиск минимального пути из множества путей до конечной группы вершин*/
+	/*searching for the least path among pathes to the finish group of vertex*/
 	valueContainer minLength;
 	int minPath = 0;
 	for (size_t index = 0; index < to.size(); ++index) {
@@ -344,7 +345,7 @@ bool Graph<T>::FordBellman(const std::vector<int> & from, const std::vector<int>
 		}
 	}
 
-	if (negativeCycleVertex == -1) {  //проверка - найден цикл с отрицательным весом или нет
+	if (negativeCycleVertex == -1) {  //checks whether there are negative cycles
 		if (minLength.isInfinity) {
 			return false;
 		}
@@ -363,7 +364,7 @@ bool Graph<T>::FordBellman(const std::vector<int> & from, const std::vector<int>
 				y = parents[y];
 			}
  
-			/*находит цикл с отрицательным весом*/
+			/*finds negative cycle*/
 			for (int cur = y; ; cur = parents[cur]) {
 				path.push_back (cur);
 				if (cur == y && path.size() > 1) {
@@ -372,7 +373,7 @@ bool Graph<T>::FordBellman(const std::vector<int> & from, const std::vector<int>
 			}
 			std::reverse (path.begin(), path.end());
  
-			/*вывод результатов на печать*/
+			/*printing results*/
 			std::cout << "There is negative cycle/Найден цикл с отрицательным весом: ";
 			for (size_t index = 0; index < path.size(); ++index) {
 				std::cout << path[index] << ' ';

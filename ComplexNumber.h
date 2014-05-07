@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-/*реализация класса комплексных чисел*/
+/*realisation of Complex Number class*/
 
 class ComplexNumber {
 private:

@@ -7,7 +7,7 @@
 #include <boost\test\unit_test.hpp>
 #include <boost\test\auto_unit_test.hpp>
 
-//проверка корректности алгоритма на целых числах
+//validation algorithm on integers
 BOOST_AUTO_TEST_CASE(test1) {
 	std::cout << "TEST1..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(test1) {
 	std::cout << std::endl;
 }
 
-//проверка корректности алгоритма на дробных числах
+//validation algorithm on double
 BOOST_AUTO_TEST_CASE(test2) {
 	std::cout << "TEST2..." << std::endl;
 	Graph<double> testGraph(10, std::cout);
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(test2) {
 	std::cout << std::endl;
 }
 
-//проверка корректности алгоритма на комплексных числах
+//validation algorithm on complex numbers
 BOOST_AUTO_TEST_CASE(test3) {
 	std::cout << "TEST3..." << std::endl;
 	Graph<ComplexNumber> testGraph(10, std::cout);
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(test3) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы алгоритма на строках
+//validation algorithm on strings
 BOOST_AUTO_TEST_CASE(test4) {
 	std::cout << "TEST4..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(test4) {
 	std::cout << std::endl;
 }
 
-//проверка корректности алгоритма на произвольном наборе данных
+//validation of the algorithm on a random set of data
 BOOST_AUTO_TEST_CASE(test5) {
 	std::cout << "TEST5..." << std::endl;
 	auto time = std::chrono::high_resolution_clock::now().max;
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE(test5) {
 	std::cout << std::endl;
 }
 
-//проверка возможности записи данных в файл
+//checks whether it is possible to write data to a file
 BOOST_AUTO_TEST_CASE(test6) {
 	std::cout << "TEST6..." << std::endl;
 	std::cout << "Writing in file.../Запись в файл..." << std::endl;
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(test6) {
 	std::cout << std::endl;
 }
 
-//проверка на невалидных данных
+//check for non-valid data
 BOOST_AUTO_TEST_CASE(test7) {
 	std::cout << "TEST7..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE(test7) {
 	std::cout << std::endl;
 }
 
-//проверка поиска пути на невалидных данных (1)
+//check the search algorithm for non-valid data (1)
 BOOST_AUTO_TEST_CASE(test8) {
 	std::cout << "TEST8..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(test8) {
 	std::cout << std::endl;
 }
 
-//проверка поиска пути на невалидных данных (2)
+//check the search algorithm for non-valid data (2)
 BOOST_AUTO_TEST_CASE(test9) {
 	std::cout << "TEST9..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(test9) {
 	std::cout << std::endl;
 }
 
-//проверка поиска пути на невалидных данных (3)
+//check the search algorithm for non-valid data (3)
 BOOST_AUTO_TEST_CASE(test10) {
 	std::cout << "TEST10..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -234,7 +234,7 @@ BOOST_AUTO_TEST_CASE(test10) {
 	std::cout << std::endl;
 }
 
-//проверка поиска пути на невалидных данных (3)
+//check the search algorithm for non-valid data (4)
 BOOST_AUTO_TEST_CASE(test11) {
 	std::cout << "TEST11..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -250,7 +250,7 @@ BOOST_AUTO_TEST_CASE(test11) {
 	std::cout << std::endl;
 }
 
-//проверка правильности вставки/удаления ребер
+//validation of insertion/deletion of edges
 BOOST_AUTO_TEST_CASE(test12) {
 	std::cout << "TEST12..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -268,7 +268,7 @@ BOOST_AUTO_TEST_CASE(test12) {
 	std::cout << std::endl;
 }
 
-//проверка правильности вставки/удаления ребер-петель (1)
+//validation of insertion/deletion of edges-loops (1)
 BOOST_AUTO_TEST_CASE(test13) {
 	std::cout << "TEST13..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -285,7 +285,7 @@ BOOST_AUTO_TEST_CASE(test13) {
 	std::cout << std::endl;
 }
 
-//проверка правильности вставки/удаления ребер-петель (2)
+//validation of insertion/deletion of edges-loops (2)
 BOOST_AUTO_TEST_CASE(test14) {
 	std::cout << "TEST14..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
@@ -302,7 +302,7 @@ BOOST_AUTO_TEST_CASE(test14) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы алгоритма с кратными ребрами
+//validation of the algorithm with multiple edges
 BOOST_AUTO_TEST_CASE(test15) {
 	std::cout << "TEST15..." << std::endl;
 	std::cout << std::endl;
@@ -322,7 +322,7 @@ BOOST_AUTO_TEST_CASE(test15) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы алгоритма Дейкстры
+//checks the correctness of Dijkstra algorithm
 BOOST_AUTO_TEST_CASE(test16) {
 	std::cout << "TEST16..." << std::endl;
 	std::cout << std::endl;
@@ -351,7 +351,7 @@ BOOST_AUTO_TEST_CASE(test16) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы алгоритма Форда-Беллмана
+//checks the correctness of Ford-Bellman algorithm
 BOOST_AUTO_TEST_CASE(test17) {
 	std::cout << "TEST17..." << std::endl;
 	std::cout << std::endl;
@@ -380,7 +380,7 @@ BOOST_AUTO_TEST_CASE(test17) {
 	std::cout << std::endl;
 }
 
-//проверка правильности нахождения цикла с отрицательным весом
+//checks correctness of finding negative edges
 BOOST_AUTO_TEST_CASE(test18) {
 	std::cout << "TEST18..." << std::endl;
 	std::cout << std::endl;
@@ -407,7 +407,7 @@ BOOST_AUTO_TEST_CASE(test18) {
 	std::cout << std::endl;
 }
 
-//проверка корректности вывода при наличии цикла с отрицательным весом (1)
+//checks correctness of printing results while finding negative edges (1)
 BOOST_AUTO_TEST_CASE(test19) {
 	std::cout << "TEST19..." << std::endl;
 	std::cout << std::endl;
@@ -428,7 +428,7 @@ BOOST_AUTO_TEST_CASE(test19) {
 }
 
 
-//проверка правильности нахождения цикла с отрицательным весом (2)
+//checks correctness of printing results while finding negative edges (2)
 BOOST_AUTO_TEST_CASE(test20) {
 	std::cout << "TEST20..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -454,7 +454,7 @@ BOOST_AUTO_TEST_CASE(test20) {
 	std::cout << std::endl;
 }
 
-//проверка правильности изменения значения на ребрах
+//checks correctness of editing values on edges
 BOOST_AUTO_TEST_CASE(test21) {
 	std::cout << "TEST21..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -469,7 +469,7 @@ BOOST_AUTO_TEST_CASE(test21) {
 	std::cout << std::endl;
 }
 
-//проверка изменения значений на ребрах на невалидных данных (1)
+//checks correctness of editing values on edges with non-valid data (1)
 BOOST_AUTO_TEST_CASE(test22) {
 	std::cout << "TEST22..." << std::endl;
 	std::cout << std::endl;
@@ -483,7 +483,7 @@ BOOST_AUTO_TEST_CASE(test22) {
 	std::cout << std::endl;
 }
 
-//проверка изменения значений на ребрах на невалидных данных (2)
+//checks correctness of editing values on edges with non-valid data (2)
 BOOST_AUTO_TEST_CASE(test23) {
 	std::cout << "TEST23..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -497,7 +497,7 @@ BOOST_AUTO_TEST_CASE(test23) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы графа с нулевыми ребрами
+//checks correctness of the algorithm with zero edges
 BOOST_AUTO_TEST_CASE(test24) {
 	std::cout << "TEST24..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -517,7 +517,7 @@ BOOST_AUTO_TEST_CASE(test24) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы функции showSize()
+//checks correctness of function showSize()
 BOOST_AUTO_TEST_CASE(test25) {
 	std::cout << "TEST25..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -528,12 +528,12 @@ BOOST_AUTO_TEST_CASE(test25) {
 	testGraph.addEdge(4, 9, 15);  
 	BOOST_REQUIRE(testGraph.showSize() == 10);
 	testGraph.addEdge(4, 11, 8);
-	testGraph.addEdge(0, 11, 9);  //ребра нумеруются с нуля
+	testGraph.addEdge(0, 11, 9);  //edges are numbered from zero
 	BOOST_REQUIRE(testGraph.showSize() == 12);
 	std::cout << std::endl;
 }
 
-//проверка корректности работы функции changeSize() (1)
+//checks correctness of function changeSize() (1)
 BOOST_AUTO_TEST_CASE(test26) {
 	std::cout << "TEST26..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -547,7 +547,7 @@ BOOST_AUTO_TEST_CASE(test26) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы функции changeSize() (2)
+//checks correctness of function changeSize() (2)
 BOOST_AUTO_TEST_CASE(test27) {
 	std::cout << "TEST27..." << std::endl;
 	Graph<int> testGraph(10, std::cout);
@@ -563,7 +563,7 @@ BOOST_AUTO_TEST_CASE(test27) {
 	std::cout << std::endl;
 }
 
-//проверка корректности работы с кодировками (вывод результатов на русском языке)
+//checks the correctness of working with the encodings (output can be printed in Russian)
 BOOST_AUTO_TEST_CASE(test28) {
 	std::cout << "TEST28..." << std::endl;
 	Graph<std::string> testGraph(10, std::cout);
